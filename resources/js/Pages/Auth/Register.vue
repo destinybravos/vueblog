@@ -90,6 +90,10 @@
             }
         },
 
+        mounted(){
+            console.log(this.form);
+        },
+
         methods: {
             submit() {
                 this.form.post(this.route('register'), {
