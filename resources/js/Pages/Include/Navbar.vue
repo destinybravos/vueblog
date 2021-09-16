@@ -19,15 +19,15 @@
                         <font-awesome :icon="['fas', 'info-circle']" /> About Us
                     </Link>
                     <Link :href="route('contact')" :class="navclasses">
-                        <font-awesome :icon="['fas', 'info-circle']" /> Contact Us
+                        <font-awesome :icon="['fas', 'phone']" /> Contact Us
                     </Link>
                 </div>
                 <div class="text-right">
                     <Link :href="route('login')" :class="navclasses">
-                        <font-awesome :icon="['fas', 'info-circle']" /> Login
+                        <font-awesome :icon="['fas', 'sign-in-alt']" /> Login
                     </Link>
                     <Link :href="route('register')" :class="navclasses">
-                        <font-awesome :icon="['fas', 'info-circle']" /> Register
+                        <font-awesome :icon="['fas', 'registered']" /> Register
                     </Link>
                 </div>
             </div>

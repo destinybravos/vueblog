@@ -20,6 +20,11 @@ Route::prefix('category')->group(function () {
     Route::post('/fetch', [PostController::class, 'fetch_category'])->name('api.fetch.category');
 });
 
+Route::prefix('contact')->group(function () {
+    Route::post('/add', [PostController::class, 'store_contact'])->name('api.store.contact');
+    Route::post('/fetch', [PostController::class, 'fetch_contact'])->name('api.fetch.contact');
+});
+
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
