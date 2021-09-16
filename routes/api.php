@@ -18,6 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('category')->group(function () {
     Route::post('/add', [PostController::class, 'store_category'])->name('api.store.category');
     Route::post('/fetch', [PostController::class, 'fetch_category'])->name('api.fetch.category');
+    Route::post('/delete', [PostController::class, 'delete_category'])->name('api.delete.category');
+});
+
+Route::prefix('post')->group(function () {
+    Route::post('/add',[PostController::class, 'store_post'])->name('api.store.post');
+    Route::post('/fetch',[PostController::class, 'fetch_post'])->name('api.fetch.post');
+    Route::post('/delete',[PostController::class, 'delete_post'])->name('api.delete.post');
 });
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

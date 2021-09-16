@@ -1,105 +1,119 @@
 <template>
-    <Head title="Register" />
-
-    <jet-authentication-card>
-        <template #logo>
-            <jet-authentication-card-logo />
-        </template>
-
-        <jet-validation-errors class="mb-4" />
-
-        <form @submit.prevent="submit">
-            <div>
-                <jet-label for="name" value="Name" />
-                <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus autocomplete="name" />
-            </div>
-
-            <div class="mt-4">
-                <jet-label for="email" value="Email" />
-                <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required />
-            </div>
-
-            <div class="mt-4">
-                <jet-label for="password" value="Password" />
-                <jet-input id="password" type="password" class="mt-1 block w-full" v-model="form.password" required autocomplete="new-password" />
-            </div>
-
-            <div class="mt-4">
-                <jet-label for="password_confirmation" value="Confirm Password" />
-                <jet-input id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" required autocomplete="new-password" />
-            </div>
-
-            <div class="mt-4" v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature">
-                <jet-label for="terms">
-                    <div class="flex items-center">
-                        <jet-checkbox name="terms" id="terms" v-model:checked="form.terms" />
-
-                        <div class="ml-2">
-                            I agree to the <a target="_blank" :href="route('terms.show')" class="underline text-sm text-gray-600 hover:text-gray-900">Terms of Service</a> and <a target="_blank" :href="route('policy.show')" class="underline text-sm text-gray-600 hover:text-gray-900">Privacy Policy</a>
-                        </div>
+    <div class="min-h-screen w-full bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center">
+        <div class="w-11/12 sm:w-9/12 md:w-2/5 lg:w-1/3 bg-gray-100 rounded p-4">
+            <form @submit.prevent="registerUser()" class="pt-4">
+                <div :class="form_group">
+                    <label for="firstname" :class="labels">
+                        <font-awesome :icon="['far', 'user']" /> Firstname
+                    </label>
+                    <input type="text" id="firstname" :class="inputs" v-model="firstname" required>
+                </div>
+                <div :class="form_group">
+                    <label for="lastname" :class="labels">
+                        <font-awesome :icon="['far', 'user']" /> Lastname
+                    </label>
+                    <input type="text" id="lastname" :class="inputs" v-model="lastname">
+                    <div v-if="errors.lastname.length > 0" :class="form_group" class="text-red-700 text-sm">
+                        {{ errors.lastname[0] }}
                     </div>
-                </jet-label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link :href="route('login')" class="underline text-sm text-gray-600 hover:text-gray-900">
-                    Already registered?
-                </Link>
-
-                <jet-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
-                </jet-button>
-            </div>
-        </form>
-    </jet-authentication-card>
+                </div>
+                <div :class="form_group">
+                    <label for="email" :class="labels">
+                        <font-awesome :icon="['far', 'envelope']" /> Email
+                    </label>
+                    <input type="text" id="email" :class="inputs" v-model="email" required>
+                </div>
+                <div :class="form_group">
+                    <label for="phone" :class="labels">
+                        <font-awesome :icon="['fas', 'phone-alt']" /> Phone Number
+                    </label>
+                    <input type="text" id="phone" :class="inputs" v-model="phone" required>
+                </div>
+                <div :class="form_group">
+                    <label for="password" :class="labels">
+                        <font-awesome :icon="['fas', 'key']" /> Password
+                    </label>
+                    <input type="password" id="password" :class="inputs" v-model="password" required>
+                </div>
+                <div :class="form_group">
+                    <label for="password" :class="labels">
+                        <font-awesome :icon="['fas', 'lock']" /> Confirm Password
+                    </label>
+                    <input type="password" id="cpassword" :class="inputs" v-model="cpassword" required>
+                </div>
+                <div :class="form_group">
+                    <button type="submit" :class="btns" class="bg-blue-800 text-white">
+                        <font-awesome :icon="['fas', 'user-plus']" /> Sign Up
+                    </button>
+                </div>
+                <div class="text-center text-sm cursor-pointer text-blue-600 animate-pulse">
+                    <Link :href="route('login')">
+                        Already have an account, Sign In.
+                    </Link>
+                </div>
+            </form>
+        </div>
+    </div>
 </template>
 
 <script>
-    import { defineComponent } from 'vue'
-    import JetAuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
-    import JetAuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
-    import JetButton from '@/Jetstream/Button.vue'
-    import JetInput from '@/Jetstream/Input.vue'
-    import JetCheckbox from '@/Jetstream/Checkbox.vue'
-    import JetLabel from '@/Jetstream/Label.vue'
-    import JetValidationErrors from '@/Jetstream/ValidationErrors.vue'
-    import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Link } from "@inertiajs/inertia-vue3";
+import JetAuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
+import axios from 'axios';
 
-    export default defineComponent({
-        components: {
-            Head,
-            JetAuthenticationCard,
-            JetAuthenticationCardLogo,
-            JetButton,
-            JetInput,
-            JetCheckbox,
-            JetLabel,
-            JetValidationErrors,
-            Link,
-        },
-
-        data() {
-            return {
-                form: this.$inertia.form({
-                    name: '',
-                    email: '',
-                    password: '',
-                    password_confirmation: '',
-                    terms: false,
-                })
-            }
-        },
-
-        mounted(){
-            console.log(this.form);
-        },
-
-        methods: {
-            submit() {
-                this.form.post(this.route('register'), {
-                    onFinish: () => this.form.reset('password', 'password_confirmation'),
-                })
+export default {
+    components:{
+        Link,
+        JetAuthenticationCardLogo
+    },
+    data(){
+        return {
+            form_group:'mb-4',
+            inputs:'w-full h-8 rounded px-3 block',
+            labels:'mb-1 font-bold',
+            btns: 'px-4 py-1 rounded',
+            firstname :'',
+            lastname : '',
+            email : '',
+            phone : '',
+            password : '',
+            cpassword : '',
+            errors:{
+                lastname:[]
             }
         }
-    })
+    },
+    methods: {
+        registerUser(){
+            let formData = {
+                firstname: this.firstname,
+                lastname: this.lastname,
+                email: this.email,
+                phone: this.phone,
+                password: this.password,
+                password_confirmation: this.cpassword,
+            }
+
+            axios.post(route('register'), formData)
+            .then(res => {
+                if(res.data.status == 'success'){
+                    this.$inertia.visit(route('dashboard'));
+                }else{
+                    alert('An Error occured!')
+                }
+            })
+            .catch(err => {
+                if (err.response) {
+                    this.errors = err.response.data.errors
+                } else {
+                    console.log('Network Error');
+                }
+            })
+        }
+    }
+}
 </script>
+
+<style>
+
+</style>
