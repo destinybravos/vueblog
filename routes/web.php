@@ -20,6 +20,9 @@ use Inertia\Inertia;
 //     return Inertia::render('Home');
 // });
 
+Route::post('/login', [PageController::class, 'login'])->name('login');
+Route::post('/register', [PageController::class, 'register'])->name('register');
+
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/About-Us', [PageController::class, 'about'])->name('about');
 Route::get('/Contact-Us', [PageController::class, 'contact'])->name('contact');
@@ -36,6 +39,6 @@ Route::get('/Manage-Categories', [PageController::class, 'categories'])->name('c
 //     ]);
 // });
 
-// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->name('dashboard');

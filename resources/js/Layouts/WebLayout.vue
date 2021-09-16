@@ -20,7 +20,7 @@ import Navbar from '../Pages/Include/Navbar.vue'
 export default {
   components: { Navbar, FooterComponent },
   props:{
-    canPost:Boolean
+    // canPost:Boolean
   }
 }
 </script>
