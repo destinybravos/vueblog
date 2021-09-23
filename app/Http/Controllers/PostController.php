@@ -10,6 +10,7 @@ class PostController extends Controller
 {
     public function store_category(Request $request)
     {
+        return $request->user();
         if (Category::where('category', $request->cat)->exists()) {
             return response()->json([
                 'status' => 'error',

@@ -20,9 +20,9 @@ use Inertia\Inertia;
 //     return Inertia::render('Home');
 // });
 
-Route::post('/login', [PageController::class, 'login'])->name('login');
-Route::post('/register', [PageController::class, 'register'])->name('register');
-Route::post('/delete_token', [PageController::class, 'delete_token'])->name('delete_token');
+// Route::post('/login', [PageController::class, 'login'])->name('login');
+// Route::post('/register', [PageController::class, 'register'])->name('register');
+// Route::post('/delete_token', [PageController::class, 'delete_token'])->name('delete_token');
 
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/About-Us', [PageController::class, 'about'])->name('about');
