@@ -20,9 +20,13 @@ use Inertia\Inertia;
 //     return Inertia::render('Home');
 // });
 
+// Route::post('/login', [PageController::class, 'login'])->name('login');
+// Route::post('/register', [PageController::class, 'register'])->name('register');
+// Route::post('/delete_token', [PageController::class, 'delete_token'])->name('delete_token');
+
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/About-Us', [PageController::class, 'about'])->name('about');
-Route::get('/Contact-Us', [PageController::class, 'about'])->name('contact');
+Route::get('/Contact-Us', [PageController::class, 'contact'])->name('contact');
 Route::get('/Blog-Posts', [PageController::class, 'posts'])->name('posts');
 Route::get('/Make-Post', [PageController::class, 'addposts'])->name('addposts');
 Route::get('/Manage-Categories', [PageController::class, 'categories'])->name('categories');
@@ -36,6 +40,6 @@ Route::get('/Manage-Categories', [PageController::class, 'categories'])->name('c
 //     ]);
 // });
 
-// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->name('dashboard');

@@ -17,11 +17,25 @@
                 </div>
             </header>
         </template>
-
-
-       <ul>
+       <!-- <ul>
            <li v-for="(name, i) in mydata" :key="i"> {{ name }} </li>
-       </ul>
+       </ul> -->
+       <div class="h-56 ">
+           <div class="grid grid-cols-1   md:grid-cols-3">
+               <div class="md:col-span-2 relative ">
+                   <img :src="img" alt="" class="w-full max-h-96 ">
+                   <span class="text-xlg font-semibold absolute tracking-wider uppercase  pl-4 bottom-20 text-white" :id="text">{{ text }}</span>
+                </div>
+               <div class=" ">
+                   <div class=" ">
+                   <img :src="img1" alt="" class=" w-full max-h-48">
+                       </div>
+                   <div class="" >
+                   <img :src="img2" alt="" class="w-full max-h-48 ">
+                       </div>
+               </div>
+           </div>
+       </div>
 
     </web-layout>
 </template>
@@ -34,7 +48,11 @@ export default {
   components: { WebLayout },
   data(){
       return {
-          mydata: usePage().props.value.mydata
+          mydata: usePage().props.value.mydata,
+          img:'img/cover.jpg',
+          img1:'img/elc.jpg',
+          img2:'img/ban.png',
+          text:'Latest Fuel Price in Imo State',
       }
   }
 
