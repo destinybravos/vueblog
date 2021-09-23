@@ -28,11 +28,10 @@
                 </div>
                <div class=" ">
                    <div class=" ">
-                   <img :src="img1" alt="" class=" w-full max-h-48">
-                       </div>
-                   <div class="" >
-                   <img :src="img2" alt="" class="w-full max-h-48 ">
-                       </div>
+                        <img :src="img1" alt="" class=" w-full max-h-48">
+                            
+                        <img :src="img2" alt="" class="w-full max-h-48 ">
+                    </div>
                </div>
            </div>
        </div>
