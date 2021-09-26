@@ -26,12 +26,30 @@
                         <font-awesome :icon="['fas', 'sign-in-alt']" /> Sign In
                     </button>
                 </div>
+                <div class="flex items-center gap-5 my-8 sm:my-2">
+                    <hr class="flex-grow">
+                    <span class="flex-initial font-semibold">Or Sign In with</span>
+                    <hr class="flex-grow">
+                </div>
+
+                <div class="grid grid-cols-2 gap-5 my-8 sm:my-4">
+                    <a :href="route('google.auth.in')" class="flex items-center border bg-gray-50 rounded py-1 px-4 font-bold font-serif">
+                        <img src="/img/google.webp" alt=" " class="h-6 w-6 mr-2"> Google
+                    </a>
+                    <a :href="route('facebook.auth.in')" class="flex items-center border bg-blue-900 text-white rounded py-1 px-4 font-bold font-san">
+                        <img src="/img/fb_logo.png" alt=" " class="h-6 w-6 mr-2"> Facebook
+                    </a>
+                </div>
                 <div class="text-center text-sm cursor-pointer text-blue-600 animate-pulse">
                     <Link :href="route('register')">
                         Don't have an account, Sign Up.
                     </Link>
                 </div>
             </form>
+
+            <div>
+                
+            </div>
         </div>
     </div>
 </template>
