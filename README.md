@@ -14,3 +14,20 @@
 
 # Vue3 Devtool for Google chrome here
 <a href="https://chrome.google.com/webstore/detail/vuejs-devtools/ljjemllljcmogpfapbkkighbhhppjdbg" target="_blank">Google Chrome Vue3 Devtool</a>
+
+
+# Add this configurations to Virtual Host to connect Socialite App
+
+`
+    <VirtualHost *:443>
+        ServerName vueblog.com
+        DocumentRoot "C:/xampp/htdocs/vueblog/public/"
+        SSLEngine on
+        SSLCertificateFile "conf\ssl.crt\server.crt"
+        SSLCertificateKeyFile "conf\ssl.key\server.key"
+        <Directory "C:/xampp/htdocs/vueblog/public/">
+            Options All
+            AllowOverride All
+        </Directory>
+    </VirtualHost>
+`
