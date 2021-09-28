@@ -42,6 +42,12 @@ class PageController extends Controller
         return Inertia::render('MakePost');
     }
 
+    public function dashboard(Request $request)
+    {
+        $user = $request->user();
+        return Inertia::render('Dashboard', ['user' => $user]);
+    }
+
     // public function login(LoginRequest $request)
     // {
     //     return $request->remember == true? 'on' : 'off';

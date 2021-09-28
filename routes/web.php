@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\PageController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\SocialiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,27 @@ Route::get('/Manage-Categories', [PageController::class, 'categories'])->name('c
 //     ]);
 // });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->name('dashboard');
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
+});
+
+
+// Socialite Routes
+Route::prefix('signup')->group(function () {
+    Route::get('/google', [SocialiteController::class, 'google_signup'])->name('google.auth');
+    Route::get('/facebook', [SocialiteController::class, 'facebook_signup'])->name('facebook.auth');
+});
+
+Route::prefix('signin')->group(function () {
+    Route::get('/google', [SocialiteController::class, 'google_signup'])->name('google.auth.in');
+    Route::get('/facebook', [SocialiteController::class, 'facebook_signup'])->name('facebook.auth.in');
+});
+
+Route::prefix('callback')->group(function () {
+    Route::get('/google', [SocialiteController::class, 'google_callback']);
+    Route::get('/facebook', [SocialiteController::class, 'facebook_callback']);
+});
