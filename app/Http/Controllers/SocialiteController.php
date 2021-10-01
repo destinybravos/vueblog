@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Throwable;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,12 @@ class SocialiteController extends Controller
 {
     public function google_signup()
     {
-        return Socialite::driver('google')->redirect();
+        try {
+            return Socialite::driver('google')->redirect();
+        } catch (Throwable $exception) {
+            return 'Network Issues';
+            throw $exception;
+        }
     }
 
     public function google_callback()

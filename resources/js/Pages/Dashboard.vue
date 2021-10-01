@@ -8,8 +8,8 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <img :src="user.profile_photo_path" alt=" ">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg inline-block">
+                    <img :src="user.profile_photo_path" alt="">
                 </div>
             </div>
         </div>

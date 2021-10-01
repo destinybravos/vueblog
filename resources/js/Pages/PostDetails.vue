@@ -18,13 +18,18 @@
             </header>
         </template>
 
+        <div>
+            <div v-html="post.content"></div>
+        </div>
+
     </web-layout>
 </template>
 
 <script>
 import WebLayout from '../Layouts/WebLayout.vue'
 export default {
-  components: { WebLayout },
+    components: { WebLayout },
+    props:{post:Object}
 
 }
 </script>

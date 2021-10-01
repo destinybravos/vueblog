@@ -21,6 +21,9 @@
    
         <div class="w-full">
             <div class="max-w-6xl mx-auto my-20 rounded">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mb-5">
+                    <img v-for="(gala, i) in gallery" :key="i" :src="'/storage/images/gallery/' + gala.image" alt="" class="inline-block h-20">
+                </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="md:col-span-2 ">
                         <div class="w-full bg-blue-900 h-10 rounded-lg">
@@ -105,7 +108,7 @@
                                         <p class="capitalize font-bold">{{ post.title }}</p>
                                         <div class="flex">
                                             <!-- <p v-html="post.content" class="overflow-ellipsis overflow-hidden w-full"> </p>  -->
-                                            <p class="text-sm ml-2 font-bold text-opacity-20 cursor-pointer">Read more ...</p>
+                                            <Link :href="route('post', [post.id])" class="text-sm ml-2 font-bold text-opacity-20 cursor-pointer">Read more ...</Link>
                                         </div>
                                     </div>
                                     <div class="text-red-600 cursor-pointer" @click="deletePost(post.id)">
@@ -131,9 +134,11 @@
 import axios from 'axios'
 import WebLayout from '../Layouts/WebLayout.vue'
 import ClassicEditor  from '@ckeditor/ckeditor5-build-classic'
+import { Link } from "@inertiajs/inertia-vue3";
 
 export default {
-    components: { WebLayout },
+    components: { WebLayout, Link },
+    props:{gallery:Array},
     data(){
         return {
             isPostMode:false,
@@ -205,6 +210,7 @@ export default {
                 if (response.data.code == 200) {
                     alert(response.data.msg)
                     this.fetchPost()
+                    this.$inertia.visit('');
                 }
                 if(res.data.code == 500) {
                     alert(response.data.msg)

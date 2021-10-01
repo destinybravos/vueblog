@@ -22,6 +22,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/fetch', [PostController::class, 'fetch_category'])->name('api.fetch.category');
         Route::post('/delete', [PostController::class, 'delete_category'])->name('api.delete.category');
     });
+
+    Route::prefix('gallery')->group(function () {
+        Route::post('/upload', [PostController::class, 'upload_image'])->name('api.gallery.upload');
+        Route::put('/uploads', [PostController::class, 'upload_images'])->name('api.gallery.uploads');
+    });
+
 });
 
 Route::prefix('post')->group(function () {

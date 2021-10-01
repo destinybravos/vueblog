@@ -29,6 +29,8 @@ Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/About-Us', [PageController::class, 'about'])->name('about');
 Route::get('/Contact-Us', [PageController::class, 'contact'])->name('contact');
 Route::get('/Blog-Posts', [PageController::class, 'posts'])->name('posts');
+Route::get('/Post/{id}', [PageController::class, 'post'])->name('post');
+// Route::get('/Confirm_Password', [PageController::class, 'confirm_password'])->name('confirm.password');
 Route::get('/Make-Post', [PageController::class, 'addposts'])->name('addposts');
 Route::get('/Manage-Categories', [PageController::class, 'categories'])->name('categories');
 
@@ -47,6 +49,7 @@ Route::get('/Manage-Categories', [PageController::class, 'categories'])->name('c
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
+    Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery');
 });
 
 

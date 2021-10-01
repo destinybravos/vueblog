@@ -31,3 +31,6 @@
         </Directory>
     </VirtualHost>
 `
+
+# Using image Intervention, Please refer to their website below
+<a href="http://image.intervention.io/">Image Intervention</a>

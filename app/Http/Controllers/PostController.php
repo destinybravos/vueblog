@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Contact;
+use App\Models\Gallery;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
     public function store_category(Request $request)
     {
-        return $request->user();
         if (Category::where('category', $request->cat)->exists()) {
             return response()->json([
                 'status' => 'error',
@@ -125,5 +126,97 @@ class PostController extends Controller
     {
         $contact = Contact::all();
         return json_encode($contact);
+    }
+
+    // Image Processing
+    // public function upload_image(Request $request)
+    // {
+    //     $extArray = ['png', 'jpg', 'jpeg'];
+    //     if ($request->hasFile('image')) {
+    //         $file = $request->file('image')->getClientOriginalName();
+    //         $filename = pathinfo($file, PATHINFO_FILENAME);
+    //         $ext = pathinfo($file, PATHINFO_EXTENSION);
+    //         $name2store =  $filename . time() . '.' . $ext;
+    //         if (in_array(strtolower($ext), $extArray)) {
+    //             if ($request->file('image')->storeAs('/public/images/gallery', $name2store)) {
+    //                 $gallery = new Gallery;
+    //                 $gallery->image = $name2store;
+    //                 if ($gallery->save()) {
+    //                     return 'Image was stored successfully';
+    //                 }else{
+    //                     unlink(storage_path('app/public/images/gallery/' . $name2store));
+    //                     return 'Image was not stored';
+    //                 }
+    //             }                
+    //         }else{
+    //             return 'Invalid Images';
+    //         }
+    //     } else {
+    //         return 'No Image Found';
+    //     }
+    // }
+
+    public function upload_image(Request $request)
+    {
+        $extArray = ['png', 'jpg', 'jpeg'];
+        if ($request->hasFile('image')) {
+            $image_file = $request->file('image')->getRealPath();
+            $file = $request->file('image')->getClientOriginalName();
+            $filename = pathinfo($file, PATHINFO_FILENAME);
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            $name2store =  $filename . time() . '.' . $ext;
+            if (in_array(strtolower($ext), $extArray)) {
+                $image = Image::make($image_file);
+                $image->resize(600,  null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    });
+                if ($image->save(storage_path('app/public/images/gallery/' . $name2store))) {
+                    $gallery = new Gallery;
+                    $gallery->image = $name2store;
+                    if ($gallery->save()) {
+                        return 'Image was stored successfully';
+                    }else{
+                        unlink(storage_path('app/public/images/gallery/' . $name2store));
+                        return 'Image was not stored';
+                    }
+                }                
+            }else{
+                return 'Invalid Images';
+            }
+        } else {
+            return 'No Image Found';
+        }
+    }
+
+    // Image Processing
+    public function upload_images(Request $request)
+    {
+        $extArray = ['png', 'jpg', 'jpeg'];
+        if ($request->hasFile('images')) { 
+            // $num_of_images = count($request->file('images'));
+            $no_stored = 0;
+            foreach ($request->file('images') as $image) {
+                $file = $image->getClientOriginalName();
+                $filename = pathinfo($file, PATHINFO_FILENAME);
+                $ext = pathinfo($file, PATHINFO_EXTENSION);
+                $name2store =  $filename . time() . '.' . $ext;
+                if (in_array(strtolower($ext), $extArray)) {
+                    if ($image->storeAs('/public/images/gallery', $name2store)) {
+                        $gallery = new Gallery;
+                        $gallery->image = $name2store;
+                        if ($gallery->save()) {
+                            $no_stored++;
+                        }else{
+                            unlink(storage_path('app/public/images/gallery/' . $name2store));
+                        }
+                    }                
+                }else{
+                    return 'Invalid Images';
+                }  
+            }
+            return $no_stored . ' images were stored successfully';
+        }else{
+            return 'No Image Founds';
+        }
     }
 }

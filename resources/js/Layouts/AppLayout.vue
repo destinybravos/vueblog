@@ -2,20 +2,21 @@
     <div>
         <Head :title="title" />
 
-        <button @click="logout()">
-            Logout
-        </button>
+        <div>
+            <ul class="bg-blue-900 text-white">
+                <li class="inline">
+                    <Link :href="route('gallery')" class="inline-block py-1 px-3">Gallery </Link>
+                </li>
+                <li class="inline">
+                    <Link href="" class="inline-block py-1 px-3" @click.prevent="logout()"> Logout </Link>
+                </li>
+                <!-- <li>
+                    <Link href="" @click.prevent="enable2Factor()"> Enable 2 Factor </Link>
+                </li> -->
+            </ul>
+        </div>
 
         <div class="min-h-screen bg-gray-100">
-            <div>
-                <!-- <p>{{ user.firstname }}</p> -->
-                <form @submit.prevent="addCategory()"> 
-                    <input type="text" v-model="category">
-                    <button type="submit">
-                        Submit Category
-                    </button>
-                </form>
-            </div>
             <!-- Page Content -->
             <main>
                 <slot></slot>
@@ -53,15 +54,18 @@ import axios from 'axios';
                     this.$inertia.visit(route('home'), { method: 'get' });
                 })
             },
-            addCategory(){
-                let data = {
-                    cat : this.category
-                }
-                axios.post(route('api.store.category'), data)
-                .then(res => {
-                    console.log(res);
-                })
-            }
+            // enable2Factor(){
+            //     axios.get('/user/two-factor-qr-code')
+            //     .then(res => {
+            //         console.log(res.data);
+            //     })
+            //     .catch(error => {
+            //         console.log('Error:: ', error.response);
+            //         if (error.response.status == 423) {
+            //             this.$inertia.visit(route('confirm.password', ['/user/two-factor-qr-code']))
+            //         }
+            //     })
+            // }
             // deleteToken(){
             //     let Headers = {
             //         headers : {

@@ -47,6 +47,7 @@
             JetLabel,
             JetValidationErrors
         },
+        props:{url:String},
 
         data() {
             return {

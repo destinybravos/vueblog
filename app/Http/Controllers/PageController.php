@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Gallery;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +36,8 @@ class PageController extends Controller
 
     public function addposts()
     {
-        return Inertia::render('MakePost');
+        $gallery = Gallery::latest()->get();
+        return Inertia::render('MakePost', ['gallery'=>$gallery]);
     }
 
     public function categories()
@@ -48,6 +51,23 @@ class PageController extends Controller
         return Inertia::render('Dashboard', ['user' => $user]);
     }
 
+    public function gallery()
+    {
+        $gallery = Gallery::latest()->get();
+        return Inertia::render('Gallery', ['gallery'=>$gallery]);
+    }
+
+    public function post($id)
+    {
+        // $post = Post::find($id);
+        $post = Post::where('id', $id)->first();
+        return Inertia::render('PostDetails', ['post'=>$post]);
+    }
+
+    // public function confirm_password(Request $request)
+    // {
+    //     return Inertia::render('Auth/ConfirmPassword');
+    // }
     // public function login(LoginRequest $request)
     // {
     //     return $request->remember == true? 'on' : 'off';
