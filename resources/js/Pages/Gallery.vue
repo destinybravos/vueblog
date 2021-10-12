@@ -31,7 +31,6 @@
                             </div>
                         </form>
                    </div>
-
                    
                    <div>
                         <form @submit.prevent="addImages" enctype="multipart/form-data">
